@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    用户名:<input type="text" v-model="userName"><br>
+    密码:<input type="password" v-model="userPass"><br>
+    <button @click="register">注册</button>
+  </div>
+  <script>
+    new Vue({
+      el:'#app',
+      data: {
+        userName: '',
+        userPass: ''
+      },
+      methods: {
+        register () {
+          if(this.userName == ''){
+            alert('请填写用户名')
+            return
+          }else if(this.userPass == ''){
+            alert('’请输入密码')
+            return
+          }else{
+            let user = {
+              userName: this.userName,
+              userPass: this.userPass
+            }
+            localStorage.setItem("user",JSON.stringify(user))
+            alert('注册成功')
+            window.location.href = './登录界面.html'
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+  <style>
+    li{
+      list-style: none
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div>添加菜单:<input type="text" v-model="val" @keyup.enter = 'add'> <button @click='add'>添加</button></div>
+    <div class="menu">
+      <ul>
+        <li v-for="(item,index) in list" v-if="flag">{{item}}<button @click="update(index)">修改</button> <button @click="del(index)">删除</button></li>
+        <li v-for="(item,index) in list"><input type="text" v-model="item"> <button @click="updateSure(index)">确定</button></li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    new Vue({
+      el:"#app",
+      data:{
+        val: '',
+        list: []
+      },
+      methods: {
+        add () {
+
+            this.list.push(this.val)
+            localStorage.setItem('list', JSON.stringify(this.list))
+            this.val = ''
+        },
+        del (index) {
+          this.list.splice(index,1)
+          localStorage.setItem('list', JSON.stringify(this.list))
+        }
+      },
+      mounted() {
+        if(localStorage.getItem('list')){
+          this.list = JSON.parse(localStorage.getItem('list'))
+        }
+      }
+    })
+  </script>
+</body>
+</html>

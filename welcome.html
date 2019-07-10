@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h3>欢迎您尊贵的{{userName}}</h3>
+  </div>
+  <script>
+    new Vue({
+      el: "#app",
+      data:{
+        userName:''
+      },
+      created () {
+        let user1 = localStorage.getItem('user')
+        let user = JSON.parse(user1)
+        this.userName = user.userName
+      }
+    })
+  </script>
+</body>
+</html>

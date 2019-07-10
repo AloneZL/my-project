@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>生命周期函数</title>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h4>{{x}}</h4>
+    <input type="text" v-model="x">
+    <button @click="break1">销毁按钮</button>
+  </div>
+  <script>
+    let vm = new Vue({
+      el: "#app",
+      data: {
+        x: 10
+      },
+      methods: {
+        break1 () {
+          this.$destroy()
+        }
+      },
+      beforeCreate () {
+        console.log('创建前--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      },
+      created () {
+        console.log('创建后--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      },
+      beforeMount () {
+        console.log('挂载前--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      },
+      mounted () {
+        console.log('挂载后--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      },
+      beforeUpdate () {
+        console.log('更新前--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      },
+      updated () {
+        console.log('更新后--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      },
+      beforeDestroy () {
+        console.log('销毁前--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      },
+      destroyed () {
+        console.log('销毁--------')
+        console.log('this.$el',this.$el)
+        console.log('this.$data',this.$data)
+        console.log('this.x',this.x)
+      }
+    })
+    /* 
+    生命周期函数的过程
+    创建前vue实例初始化没有其他的操作，没有挂载元素没有data数据
+    在创建前和创建之间也是vue的初始化没有挂载元素和data数据
+    当进行到creted的时候此时已经获取到了data数据，但是还是没有出现el
+    在beforeMount挂载前会先判断是否有挂载元素el如果有会进行挂载。如果没有需要手动挂载el，可以通过vm.$mount('el')进行手动挂载
+    如果没有手动挂载声明周期结束；
+    如果有render函数则渲染render函数中的内容 因为render函数的优先级最高 本质上是一个createElement('标签名','内容')
+    如果没有render函数则去找template对象，如果有则渲染template中的内容如果没有则渲染outerhtml如果都没有则内容为空
+    挂载前会渲染一个虚拟dom结构进行占位里面的数据还没有被解析，当执行到mounted的时候才会解析data数据将虚拟dom元素中的数据进行替换
+    当vue中的绑定的数据进行修改时会执行beforeUpdate和updated的生命周期函数这两个函数都是在数据更新后执行的
+    beforedestroy和destroyed不会自己触发需要手动进行调用this.$destroy()方法进行销毁，销毁后不再挂载元素，所以修改的数据不会进行双向更新页面也无法渲染更新后的值
+    */
+  </script>
+</body>
+</html>

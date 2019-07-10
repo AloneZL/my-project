@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./node_modules/vue/dist/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    用户名:<input type="text" v-model='userName'><br>
+    密码:<input type="password" v-model='userPass'><br>
+    <button @click="login">登录</button>
+  </div>
+  <script>
+    new Vue({
+      el:'#app',
+      data:{
+        userName: '',
+        userPass: ''
+      },
+      methods: {
+        login () {
+          if(this.userName == ''){
+            alert('请输入用户名')
+            return
+          }else if(this.userPass == '') {
+            alert('请输入密码')
+            return
+          }else{
+            let user1 = localStorage.getItem('user')
+            let user = JSON.parse(user1)
+            if(this.userName == user.userName && this.userPass == user.userPass){
+              alert('登录成功')
+              window.location.href = './welcome.html'
+            }else{
+              alert('用户名或密码输入错误')
+            }
+          }
+        }
+      },
+    })
+  </script>
+</body>
+</html>
